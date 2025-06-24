@@ -1,0 +1,9 @@
+streamlit
+pdfminer.six
+python-docx
+pytesseract
+opencv-python-headless
+transformers
+scikit-learn
+langdetect
+certifi
