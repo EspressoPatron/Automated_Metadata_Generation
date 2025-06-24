@@ -123,5 +123,5 @@ if uploaded:
                 mime="application/json"
             )
 
-st.sidebar.image("https://images.app.goo.gl/9RxHnDF9HV9PM3Qx7", use_column_width=True)
-st.sidebar.markdown("#### Auto Metadata Generator")
+# st.sidebar.image("https://images.app.goo.gl/9RxHnDF9HV9PM3Qx7", use_column_width=True)
+# st.sidebar.markdown("#### Auto Metadata Generator")
