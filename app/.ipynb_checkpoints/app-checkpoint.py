@@ -10,9 +10,7 @@ from pdfminer.high_level import extract_text as extract_pdf_text
 import pytesseract
 import cv2
 
-# ----------------------------
 # Text Extraction Functions
-# ----------------------------
 
 def extract_text_from_pdf(path):
     return extract_pdf_text(path)
@@ -42,9 +40,7 @@ def extract_text_auto(path):
     else:
         return ""
 
-# ----------------------------
 # Chunked Summarization & Keywords
-# ----------------------------
 
 def split_into_chunks(text, max_chars=1000):
     paragraphs = text.split('\n')
@@ -67,7 +63,7 @@ def summarize_text_limited(text, summarizer, max_chars=1000, max_chunks=3):
             result = summarizer(chunk, max_length=100, min_length=30, do_sample=False)[0]['summary_text']
             summaries.append(result)
         except Exception as e:
-            print(f"⚠️ Chunk {i} skipped: {e}")
+            print(f"Chunk {i} skipped: {e}")
     return "\n".join(summaries)
 
 def extract_keywords(text, top_n=10):
@@ -75,12 +71,10 @@ def extract_keywords(text, top_n=10):
     X = vectorizer.fit_transform([text])
     return vectorizer.get_feature_names_out()
 
-# ----------------------------
 # Streamlit App
-# ----------------------------
 
 st.set_page_config(page_title="Auto Metadata Generator", page_icon="📄")
-st.title("📄 Automated Metadata Generator")
+st.title("Automated Metadata Generator")
 
 uploaded = st.file_uploader("Upload PDF, DOCX, TXT, JPG, or PNG", type=["pdf", "docx", "txt", "jpg", "jpeg", "png"])
 
@@ -102,7 +96,7 @@ if uploaded:
         text = extract_text_auto(temp_path)
 
         if not text or len(text.strip()) < 50:
-            st.error("⚠️ Insufficient content extracted.")
+            st.error("Insufficient content extracted.")
         else:
             lang = detect(text)
             summary = summarize_text_limited(text, summarizer)
@@ -118,12 +112,12 @@ if uploaded:
                 "num_words": len(text.split())
             }
 
-            st.success("✅ Metadata Generated")
-            st.subheader("🧾 Metadata")
+            st.success("Metadata Generated")
+            st.subheader("Metadata")
             st.json(metadata)
 
             st.download_button(
-                "📥 Download Metadata JSON",
+                "Download Metadata JSON",
                 data=json.dumps(metadata, indent=4),
                 file_name=f"{filename.rsplit('.',1)[0]}_metadata.json",
                 mime="application/json"
